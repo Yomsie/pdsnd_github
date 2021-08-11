@@ -35,32 +35,32 @@ def get_filters():
                 continue
         else:
             print('\nThanks! you\'ve  selected {}'.format(city))
-            #break 
+            #break
 
     # get user input for month (all, january, february, ... , june)
         valid_months=['all','january','february','march','april','may','june']
-                      
+
         month = input('\nplease input month (only January to June) you will like to explore: type "all" for no filter\n').lower()
-    
+
         if month not in valid_months:
             print('\nmonth name not recognised, please try again...restarting')
             continue
         else:
             print('\nThanks! you\'ve  selected: {}'.format(month))
-    
+
     # get user input for day of week (all, monday, tuesday, ... sunday)
-    
+
         valid_days=['all','monday','tuesday','wednesday','thursday','friday','saturday','sunday']
         day = input('\nplease input name of day you will like to explore: type "all" for no filter\n').lower()
-    
+
         if day not in valid_days:
             print('\name of day not recognised, please try again...restarting')
             continue
         else:
             print('\nThanks! you\'ve selected: {}'.format(day))
-            
+
         print('-'*40)
-    
+
         return city, month, day
 
 
@@ -108,16 +108,16 @@ def load_data(city, month, day):
     else:
         df_filter2 = df_filter1[df_filter1.Months.eq(month.title())]
     # ignore filter when day selected is "all"
-    if day == 'all':        
+    if day == 'all':
         df_filter3=df_filter2
     else:
         df_filter3 = df_filter2[df_filter2.Weekday.eq(day.title())]
-        
+
     df = pd.DataFrame(df_filter3)
-    
+
     #insert zeros for all NaN
     df=df.fillna(0)
-    
+
     #viewing DataFrame for debugging
     print(df.head(10))
 
@@ -137,11 +137,11 @@ def time_stats(df):
     # display the most common day of week
     week_mode=df['Weekday'].mode()[0]
     print('\nMost common weekday:{}'.format(week_mode))
-    
+
     # display the most common start hour
     df['Start_hr']=df['Start Time'].dt.hour
     strt_hr_mode=df['Start_hr'].mode()[0]
-    
+
     print('\nMost common start hour:{}'.format(strt_hr_mode))
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
@@ -157,7 +157,7 @@ def station_stats(df):
     # display most commonly used start station
     strt_sttn_mode=df['Start Station'].mode()[0]
     print('\nThe Most Popular Start Station is\n{}'.format(strt_sttn_mode))
-    
+
     # display most commonly used end station
     end_sttn_mode=df['End Station'].mode()[0]
     print('\nThe Most Popular End Station is\n{}'.format(end_sttn_mode))
@@ -224,7 +224,7 @@ def view_lines(df):
     print('\nCalculating User Stats...\n')
     start_time = time.time()
     # display few lines for user's satisfaction
-    
+
     view_data = input('\n\n\nWould you like to view a few rows of individual trip data? Enter yes or no\n').lower()
     start_loc = 5
     while view_data == 'yes': #(?????):
@@ -235,10 +235,10 @@ def view_lines(df):
             break
         else:
             continue
-            
+
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
-    
+
 def main():
     while True:
         city, month, day = get_filters()
@@ -252,14 +252,11 @@ def main():
         restart = input('\nWould you like to restart? Enter yes or no.\n')
         if restart.lower() != 'yes':
             print('\nThanks for exploring our US bikeshare data!!!')
-            break      
+            print('\n Bye'*10)
+            break
 if __name__ == "__main__":
 	main()
 
 
 
 # In[ ]:
-
-
-
-
